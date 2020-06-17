@@ -9,13 +9,9 @@ if('serviceWorker' in navigator) {
             } else {
                 let today = new Date()
                 let time = Math.abs(today - new Date(date))
-                if (time > 8) {
-                    console.log(time)
+                if (time >= (1000*60*60*8)) {
                     sessionStorage.clear()
                     sessionStorage.setItem('idmdate', new Date().toString())
-                } else {
-                    console.log('8 was above' +  time)
-                    sessionStorage.setItem('idmdate', today.toString())
                 }
             }
         }).catch((e) => {
