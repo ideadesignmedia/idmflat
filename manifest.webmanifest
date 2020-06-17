@@ -1,0 +1,14 @@
+{
+    "name": "Idea Design Media",
+    "short_name": "IDM",
+    "start_url": ".",
+    "display": "fullscreen",
+    "background_color": "#fff",
+    "description": "Full Stack Web Design",
+    "icons": [{
+      "src": "/static/icon.svg",
+      "sizes": "150x150",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }]
+  }
