@@ -5,6 +5,28 @@ const User = require('./api/models/user')
 const nm = require('nodemailer')
 const multer = require('multer')
 const path = require('path')
+ipConsolidate = function(ip, user) {
+    return new Promise(async (res, rej) => {
+        let consolidateduser
+        await User.findOneAndUpdate({_id: user}, { $addToSet: {ips: {ip: ip}} }, {returnOriginal: false}, (err, user) => {
+            if (err) {
+                return rej(err)
+            }
+            if (!user) {
+                return res(false)
+            }
+            if (user) {
+                console.log(user)
+                consolidateduser = user.ips
+                user.save().then(result => {
+                    return res(true)
+                }).catch((e) => {
+                    return rej(e)
+                });
+            }
+        })
+    })
+}
 checkAuth = function(req){
     return new Promise((res, rej) => {
         const token = req.headers['authentication'];
@@ -212,5 +234,6 @@ module.exports = {
     validateUser: validateUser,
     upload: upload,
     checkAuth: checkAuth,
-    sendEmail: sendEmail
+    sendEmail: sendEmail,
+    ipConsolidate: ipConsolidate
 }
