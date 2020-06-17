@@ -54,6 +54,9 @@ app.use('/cache', track, async (req, res) => {
                 if (err) {
                     console.log('Unable to scan directory: ' + err);
                 }
+                if (!data) {
+                    return res(true)
+                }
                 for (i = 0; i < data.length; i++) {
                     arr.push(`/static/cache/${data[i]}`)
                     if (i === data.length - 1) {
