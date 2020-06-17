@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const loggingtool = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const mongo = require('mongoose')
 const fs = require('fs');
 const track = require('./api/sessions/track.js')
 app.set('trust proxy', true);
