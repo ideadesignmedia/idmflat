@@ -1,7 +1,7 @@
 if('serviceWorker' in navigator) {
     console.log('service worker is enabled')
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(result => {
+        navigator.serviceWorker.register('/sw.js').then(() => {
             console.log('IDMSW Registered');
             let date = sessionStorage.getItem('idmdate')
             if (!date) {

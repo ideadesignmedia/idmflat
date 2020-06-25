@@ -16,10 +16,12 @@ ipConsolidate = function(ip, user) {
                 return res(false)
             }
             if (user) {
-                console.log(user)
-                consolidateduser = user.ips
                 user.save().then(result => {
-                    return res(true)
+                    if (result) {
+                        return res(true)
+                    } else {
+                        return res(false)
+                    }  
                 }).catch((e) => {
                     return rej(e)
                 });
@@ -93,7 +95,7 @@ sendEmail = function(email, subject, markup){
             secure: true, // true for 465, false for other ports
             auth: {
                 user: 'mail@ideadesignmedia.com',
-                pass: 'jP0lZq}DSSE;'
+                pass: process.env.MAILPASS
             },
             tls: {
                 rejectUnauthorized: false
@@ -138,7 +140,7 @@ sendEmail = function(email, subject, markup){
     })
 }
 const storage = multer.diskStorage({
-    destination: './public/useruploads',
+    destination: './public/content/useruploads',
     filename: function(req, file, cb) {
         var date = new Date().toISOString();
         var ds = date.split(':');
@@ -214,8 +216,20 @@ getUser = function(user){
                     return res(true)
                 }
             })
-        } else {
+        } else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user)) {
             User.findOne({email: user}, (err, user) => {
+                if (err) {
+                    return rej(err)
+                }
+                if (!user) {
+                    return res(false)
+                }
+                if (user) {
+                    return res(user)
+                }
+            })
+        } else {
+            User.findOne({username: user}, (err, user) => {
                 if (err) {
                     return rej(err)
                 }

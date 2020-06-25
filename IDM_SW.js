@@ -26,10 +26,12 @@ self.addEventListener('install', (e)=>{
         getCache().then(cacheItems => {
             for (i = 0; i < cacheItems.length; i++) {
                 let that = cacheItems[i]
-                caches.match(cacheItems[i]).then(result => {
+                caches.match(that).then(result => {
                     if (!result) {
                         cache.add(that)
                     }
+                }).catch(e => {
+                    console.log(e)
                 })
             }
             caches.match('/').then(result => {
@@ -61,5 +63,8 @@ self.addEventListener('fetch', (e) => {
         } else {
             return res
         }
+    }).catch(e => {
+        console.log(e)
+        return null
     }))
 })

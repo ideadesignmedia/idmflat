@@ -8,6 +8,8 @@ const visitorSchema = mongo.Schema({
             date: Date,
             page: Array
         }
-    ]}
+    ]},
+    banned: Boolean,
+    overhaul: Number
 });
 module.exports = mongo.model('Visitor', visitorSchema);
